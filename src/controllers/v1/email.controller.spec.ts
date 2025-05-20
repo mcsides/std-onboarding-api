@@ -1,22 +1,43 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EmailController } from './email.controller';
-import e from 'express';
+import { EmailDto } from './dto/email.dto';
+import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
 
 describe('EmailController', () => {
   let emailController: EmailController;
+  const validateEmailUsecaseMock = {
+    exe: jest.fn(),
+  };
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [EmailController],
-      providers: [],
+      providers: [
+        {
+          provide: ValidateEmailUsecase,
+          useValue: validateEmailUsecaseMock,
+        },
+      ],
     }).compile();
 
     emailController = app.get<EmailController>(EmailController);
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(emailController.getHello()).toBe('email ok!');
+    it('should return email and email id when validating an email', () => {
+      //given
+      const emailDtoMock: EmailDto = {
+        id: '1234',
+        email: 'gvalenncia@gmail.com',
+      };
+      jest.spyOn(validateEmailUsecaseMock, 'exe').mockReturnValue(emailDtoMock);
+
+      //when
+      const result: EmailDto = emailController.postValidateEmail({
+        email: 'gvalenncia@gmail.com',
+      });
+
+      expect(result).toBe(emailDtoMock);
     });
   });
 });
