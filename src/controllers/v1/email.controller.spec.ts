@@ -37,6 +37,7 @@ describe('EmailController', () => {
         email: 'gvalenncia@gmail.com',
       });
 
+      //then
       expect(result).toBe(emailDtoMock);
     });
   });
