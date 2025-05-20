@@ -24,7 +24,7 @@ describe('EmailController', () => {
   });
 
   describe('root', () => {
-    it('should return email and email id when validating an email', () => {
+    it('should return the email id created when email is valid', () => {
       //given
       const emailDtoMock: EmailDto = {
         id: '1234',
