@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EmailController } from './email.controller';
-import { EmailDto } from './dto/email.dto';
+import { EmailDto } from './dto/email-validation.dto';
 import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
 
 describe('EmailController', () => {
