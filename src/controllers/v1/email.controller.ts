@@ -2,7 +2,7 @@ import { Body, ConflictException, Controller, Post } from '@nestjs/common';
 import { ValidateEmailDto } from './dto/validate-email.dto';
 import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
 import { EmailValidationDto } from './dto/email-validation.dto';
-import { EmailStatus } from 'src/usecase/email-status';
+import { EmailStatus } from '../../usecase/email-status';
 import { v4 as uuidv4 } from 'uuid';
 
 @Controller('/v1/email')
@@ -10,7 +10,7 @@ export class EmailController {
   constructor(private readonly validateEmailUsecase: ValidateEmailUsecase) {}
 
   @Post('/validate')
-  async getValidateEmail(
+  async validateEmail(
     @Body() validateEmailDto: ValidateEmailDto,
   ): Promise<EmailValidationDto> {
     const newObid = uuidv4();
