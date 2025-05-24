@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EmailController } from './email.controller';
-import { EmailDto } from './dto/email-validation.dto';
+import { EmailValidationDto } from './dto/email-validation.dto';
 import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
+import { EmailStatus } from '../../usecase/email-status';
+import { OnboardingState } from '../../domain/entity/onboarding-state.enum';
+import { Onboarding } from '../../domain/entity/onboarding';
 
 describe('EmailController', () => {
   let emailController: EmailController;
@@ -24,21 +27,28 @@ describe('EmailController', () => {
   });
 
   describe('root', () => {
-    it('should return the email id created when email is valid', () => {
+    it('should return the email id created when email is valid', async () => {
       //given
-      const emailDtoMock: EmailDto = {
-        id: '1234',
+      const onboardingCreatedMock = Onboarding.builder()
+        .setOnboardingId('1234')
+        .setStatus(OnboardingState.INITIATED)
+        .setEmail('gvalenncia@gmail.com')
+        .build();
+      const emailValidationDtoMock: EmailValidationDto = {
+        onboardingId: '1234',
         email: 'gvalenncia@gmail.com',
       };
-      jest.spyOn(validateEmailUsecaseMock, 'exe').mockReturnValue(emailDtoMock);
+      jest
+        .spyOn(validateEmailUsecaseMock, 'exe')
+        .mockResolvedValue([onboardingCreatedMock, EmailStatus.AVAILABLE]);
 
       //when
-      const result: EmailDto = emailController.postValidateEmail({
+      const result: EmailValidationDto = await emailController.validateEmail({
         email: 'gvalenncia@gmail.com',
       });
 
       //then
-      expect(result).toBe(emailDtoMock);
+      expect(result).toEqual(emailValidationDtoMock);
     });
   });
 });

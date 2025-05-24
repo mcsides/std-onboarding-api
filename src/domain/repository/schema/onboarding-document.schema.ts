@@ -5,8 +5,8 @@ export class OnboardingDocument {
   @Prop({ required: true, unique: true })
   onboardingId: string;
   @Prop({ required: true })
-  state: string;
-  @Prop()
+  status: string;
+  @Prop({ required: true, unique: true })
   email: string;
   @Prop()
   mobile?: number;

@@ -62,7 +62,7 @@ export class OnboardingRepository {
   private fromEntityToDoc(onboarding: Onboarding): OnboardingDocument {
     return {
       onboardingId: onboarding.getOnboardingId(),
-      state: onboarding.getState(),
+      status: onboarding.getStatus(),
       email: onboarding.getEmail(),
     } as OnboardingDocument;
   }
@@ -70,7 +70,7 @@ export class OnboardingRepository {
   private fromDocToEntity(doc: OnboardingDocument): Onboarding {
     return Onboarding.builder()
       .setOnboardingId(doc.onboardingId)
-      .setState(doc.state)
+      .setStatus(doc.status)
       .setEmail(doc.email)
       .build();
   }
