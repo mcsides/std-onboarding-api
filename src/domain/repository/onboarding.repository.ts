@@ -15,6 +15,32 @@ export class OnboardingRepository {
     this.logger = new Logger(OnboardingRepository.name);
   }
 
+  async findByEmail(email: string): Promise<Onboarding | void> {
+    return this.onboardingModel
+      .findOne({ email })
+      .exec()
+      .then((onboardingFound) => {
+        if (onboardingFound) {
+          this.logger.debug(
+            `Onboarding found by email: ${onboardingFound.email} — onboardingId: ${onboardingFound.onboardingId}`,
+          );
+          return this.fromDocToEntity(onboardingFound);
+        } else {
+          this.logger.warn(`Onboarding not found by email: ${email}`);
+          return undefined;
+        }
+      })
+      .catch((error) => {
+        this.logger.error(
+          `Unexpected error while fetching onboarding by email: ${email} — ${error}`,
+          error.stack,
+        );
+        throw new InternalServerErrorException(
+          `Failed to fetch onboarding by email: ${email}`,
+        );
+      });
+  }
+
   async createOnboarding(onboarding: Onboarding): Promise<Onboarding> {
     const doc = this.fromEntityToDoc(onboarding);
     return this.onboardingModel
@@ -37,6 +63,7 @@ export class OnboardingRepository {
     return {
       onboardingId: onboarding.getOnboardingId(),
       state: onboarding.getState(),
+      email: onboarding.getEmail(),
     } as OnboardingDocument;
   }
 
@@ -44,6 +71,7 @@ export class OnboardingRepository {
     return Onboarding.builder()
       .setOnboardingId(doc.onboardingId)
       .setState(doc.state)
+      .setEmail(doc.email)
       .build();
   }
 }

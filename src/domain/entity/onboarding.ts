@@ -2,7 +2,7 @@ export class Onboarding {
   constructor(
     private readonly onboardingId: string,
     private readonly state: string,
-    private readonly email?: string,
+    private readonly email: string,
     private readonly mobile?: number,
   ) {}
 
@@ -14,7 +14,7 @@ export class Onboarding {
     return this.state;
   }
 
-  getEmail(): string | undefined {
+  getEmail(): string {
     return this.email;
   }
 
@@ -29,8 +29,8 @@ export class Onboarding {
 
 class OnboardingBuilder {
   private onboardingId!: string;
-  private state!: string;
-  private email?: string;
+  private state: string;
+  private email: string;
   private mobile?: number;
 
   setOnboardingId(onboardingId: string): this {
@@ -54,9 +54,9 @@ class OnboardingBuilder {
   }
 
   build(): Onboarding {
-    if (!this.onboardingId || !this.state) {
+    if (!this.onboardingId || !this.state || !this.email) {
       throw new Error(
-        'onboardingId and state are required to build an Onboarding object',
+        'onboardingId, state and email are required to build an Onboarding object',
       );
     }
     return new Onboarding(
