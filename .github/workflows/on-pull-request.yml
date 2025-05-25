@@ -21,6 +21,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: yarn
+
       - name: Clean and install
         run: yarn install --frozen-lockfile
 
@@ -32,3 +38,6 @@ jobs:
 
       - name: Build binaries
         run: yarn build
+      
+      - name: List files to upload
+        run: ls -lR ./
