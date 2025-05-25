@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { OnboardingDocument } from './schema/onboarding-document.schema';
 import { Model } from 'mongoose';
 import { Onboarding } from '../entity/onboarding';
+import { OnboardingStatus } from '../entity/onboarding-status.enum';
 
 @Injectable()
 export class OnboardingRepository {
@@ -32,8 +33,8 @@ export class OnboardingRepository {
       })
       .catch((error) => {
         this.logger.error(
-          `Unexpected error while fetching onboarding by email: ${email} — ${error}`,
-          error.stack,
+          `Unexpected error while fetching onboarding by email: ${email} `,
+          error,
         );
         throw new InternalServerErrorException(
           `Failed to fetch onboarding by email: ${email}`,
@@ -43,6 +44,7 @@ export class OnboardingRepository {
 
   async createOnboarding(onboarding: Onboarding): Promise<Onboarding> {
     const doc = this.fromEntityToDoc(onboarding);
+    const onboardingId = onboarding.getOnboardingId();
     return this.onboardingModel
       .create(doc)
       .then((docCreated) => {
@@ -50,11 +52,11 @@ export class OnboardingRepository {
       })
       .catch((error) => {
         this.logger.error(
-          `Unexpected error while creating an onboarding. onboardingId: ${onboarding.getOnboardingId} — ${error}`,
-          error.stack,
+          `Unexpected error while creating an onboarding. onboardingId: ${onboardingId} `,
+          error,
         );
         throw new InternalServerErrorException(
-          `Failed to create onboarding. onboardingId: ${onboarding.getOnboardingId()}`,
+          `Failed to create onboarding. onboardingId: ${onboardingId}`,
         );
       });
   }
@@ -70,7 +72,7 @@ export class OnboardingRepository {
   private fromDocToEntity(doc: OnboardingDocument): Onboarding {
     return Onboarding.builder()
       .setOnboardingId(doc.onboardingId)
-      .setStatus(doc.status)
+      .setStatus(OnboardingStatus[doc.status as keyof typeof OnboardingStatus])
       .setEmail(doc.email)
       .build();
   }

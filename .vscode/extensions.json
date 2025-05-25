@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "azemoh.one-monokai",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.vscode-github-actions",
+    "hashicorp.terraform",
+    "karatelabs.karate",
+    "kisstkondoros.vscode-gutter-preview",
+    "mongodb.mongodb-vscode",
+    "naumovs.color-highlight",
+    "pkief.material-icon-theme",
+    "redhat.vscode-yaml",
+    "ritwickdey.liveserver",
+    "tamasfe.even-better-toml",
+  ]
+}

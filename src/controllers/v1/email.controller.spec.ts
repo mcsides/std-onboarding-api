@@ -3,7 +3,7 @@ import { EmailController } from './email.controller';
 import { EmailValidationDto } from './dto/email-validation.dto';
 import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
 import { EmailStatus } from '../../usecase/email-status';
-import { OnboardingState } from '../../domain/entity/onboarding-state.enum';
+import { OnboardingStatus } from '../../domain/entity/onboarding-status.enum';
 import { Onboarding } from '../../domain/entity/onboarding';
 
 describe('EmailController', () => {
@@ -31,7 +31,7 @@ describe('EmailController', () => {
       //given
       const onboardingCreatedMock = Onboarding.builder()
         .setOnboardingId('1234')
-        .setStatus(OnboardingState.INITIATED)
+        .setStatus(OnboardingStatus.INITIATED)
         .setEmail('gvalenncia@gmail.com')
         .build();
       const emailValidationDtoMock: EmailValidationDto = {
