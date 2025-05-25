@@ -25,7 +25,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: yarn
 
       - name: Clean and install
         run: yarn install --frozen-lockfile
@@ -38,6 +37,24 @@ jobs:
 
       - name: Build binaries
         run: yarn build
+    
+      - name: Upload artifacts for release
+        id: artifacts-for-release
+        uses: actions/upload-artifact@v4
+        with:
+          name: root-folder
+          path: ./
+
+  release:
+    name: Release application
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifacts for release
+        uses: actions/download-artifact@v4
+        with:
+          name: root-folder
+          path: ./
       
-      - name: List files to upload
-        run: ls -lR ./
+      - name: List iploaded files
+        run: ls -la
