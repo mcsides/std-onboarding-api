@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EmailValidationDto {
-    @ApiProperty()
+  @ApiProperty()
   onboardingId: string;
-    @ApiProperty()
+  @ApiProperty()
   email: string;
 
   constructor(onboardingId: string, email: string) {

@@ -10,7 +10,10 @@ export class EmailController {
   constructor(private readonly validateEmailUsecase: ValidateEmailUsecase) {}
 
   @Post('/validate')
-  @ApiCreatedResponse({ description: 'The email has been has been validated.', type: EmailValidationDto})
+  @ApiCreatedResponse({
+    description: 'The email has been has been validated.',
+    type: EmailValidationDto,
+  })
   async validateEmail(
     @Body() validateEmailDto: ValidateEmailDto,
   ): Promise<EmailValidationDto> {
