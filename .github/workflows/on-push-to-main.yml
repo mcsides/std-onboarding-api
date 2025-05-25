@@ -35,6 +35,7 @@ jobs:
   release:
     name: Release application
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Download artifacts for release
         uses: actions/download-artifact@v4
