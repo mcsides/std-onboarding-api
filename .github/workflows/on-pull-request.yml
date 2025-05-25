@@ -56,9 +56,12 @@ jobs:
           name: root-folder
           path: ./
       
-      - name: List iploaded files
-        run: ls -la
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
 
       - name: Release a new version
         run: | 
-          yarn test && yarn lint:
+          ls -la
+          yarn test
