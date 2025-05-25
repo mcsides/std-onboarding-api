@@ -6,10 +6,9 @@ on:
       - main
 
 jobs:
-  release:
-    name: Release application
+  build:
+    name: Build Application
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -22,6 +21,26 @@ jobs:
 
       - name: Run unit tests
         run: yarn test
+
+      - name: Build binaries
+        run: yarn build
+
+      - name: Upload artifacts for release
+        id: artifacts-for-release
+        uses: actions/upload-artifact@v4
+        with:
+          name: root-folder
+          path: /
+
+  release:
+    name: Release application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts for release
+        uses: actions/download-artifact@v4
+        with:
+          name: root-folder
+          path: /
 
       - name: Release a new version
         env:
