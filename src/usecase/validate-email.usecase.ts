@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 import { EmailStatus } from './email-status';
 import { OnboardingRepository } from '../domain/repository/onboarding.repository';
-import { OnboardingState } from '../domain/entity/onboarding-state.enum';
+import { OnboardingStatus } from '../domain/entity/onboarding-status.enum';
 import { Onboarding } from '../domain/entity/onboarding';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class ValidateEmailUsecase {
       .then((onboardingFound) => {
         this.logger.log(onboardingFound);
         if (onboardingFound) {
-          if (onboardingFound.getStatus() === OnboardingState.INITIATED) {
+          if (OnboardingStatus.INITIATED === onboardingFound.getStatus()) {
             return [onboardingFound, EmailStatus.AVAILABLE];
           } else {
             this.logger.error(`The email is already taken: ${email}`);
@@ -31,7 +31,7 @@ export class ValidateEmailUsecase {
         } else {
           const obToCreate = Onboarding.builder()
             .setOnboardingId(onboardingId)
-            .setStatus(OnboardingState.INITIATED)
+            .setStatus(OnboardingStatus.INITIATED)
             .setEmail(email)
             .build();
 

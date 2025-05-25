@@ -1,7 +1,9 @@
+import { OnboardingStatus } from './onboarding-status.enum';
+
 export class Onboarding {
   constructor(
     private readonly onboardingId: string,
-    private readonly status: string,
+    private readonly status: OnboardingStatus,
     private readonly email: string,
     private readonly mobile?: number,
   ) {}
@@ -10,7 +12,7 @@ export class Onboarding {
     return this.onboardingId;
   }
 
-  getStatus(): string {
+  getStatus(): OnboardingStatus {
     return this.status;
   }
 
@@ -29,7 +31,7 @@ export class Onboarding {
 
 class OnboardingBuilder {
   private onboardingId!: string;
-  private status: string;
+  private status: OnboardingStatus;
   private email: string;
   private mobile?: number;
 
@@ -38,7 +40,7 @@ class OnboardingBuilder {
     return this;
   }
 
-  setStatus(status: string): this {
+  setStatus(status: OnboardingStatus): this {
     this.status = status;
     return this;
   }
