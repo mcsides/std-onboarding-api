@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/mcsides/std-onboarding-api/compare/v1.0.0...v1.0.1) (2025-05-25)
+
+
+### Bug Fixes
+
+* split release workflow in different jobs ([#15](https://github.com/mcsides/std-onboarding-api/issues/15)) ([a172376](https://github.com/mcsides/std-onboarding-api/commit/a1723761de74031eb1ada7d57830dcf4f688072e))
+
 # 1.0.0 (2025-05-19)
 
 
