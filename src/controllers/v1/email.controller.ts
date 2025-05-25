@@ -4,12 +4,13 @@ import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
 import { EmailValidationDto } from './dto/email-validation.dto';
 import { EmailStatus } from '../../usecase/email-status';
 import { v4 as uuidv4 } from 'uuid';
-
+import { ApiCreatedResponse } from '@nestjs/swagger';
 @Controller('/v1/email')
 export class EmailController {
   constructor(private readonly validateEmailUsecase: ValidateEmailUsecase) {}
 
   @Post('/validate')
+  @ApiCreatedResponse({ description: 'The email has been has been validated.', type: EmailValidationDto})
   async validateEmail(
     @Body() validateEmailDto: ValidateEmailDto,
   ): Promise<EmailValidationDto> {
