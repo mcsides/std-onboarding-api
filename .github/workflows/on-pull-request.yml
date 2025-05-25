@@ -58,3 +58,7 @@ jobs:
       
       - name: List iploaded files
         run: ls -la
+
+      - name: Release a new version
+        run: | 
+          yarn test && yarn lint:
