@@ -22,6 +22,9 @@ jobs:
       - name: Run unit tests
         run: yarn test:unit
 
+      - name: Run integration tests
+        run: yarn test:integration
+
   release:
     name: Release application
     runs-on: ubuntu-latest
