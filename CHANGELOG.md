@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/mcsides/std-onboarding-api/compare/v1.0.1...v1.1.0) (2025-05-26)
+
+
+### Features
+
+* introduce integration tests ([#22](https://github.com/mcsides/std-onboarding-api/issues/22)) ([8361482](https://github.com/mcsides/std-onboarding-api/commit/83614828723cc532c51e5a3cf8b2d85c079dcfd4))
+
 ## [1.0.1](https://github.com/mcsides/std-onboarding-api/compare/v1.0.0...v1.0.1) (2025-05-25)
 
 
