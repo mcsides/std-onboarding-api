@@ -1,0 +1,24 @@
+name: On Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Git tag to deploy from (e.g., v1.2.3)'
+        required: true
+        type: string
+      env:
+        description: 'Select environment to deploy'
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout code at tag: ${{ inputs.tag }}' 
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
