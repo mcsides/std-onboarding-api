@@ -28,4 +28,4 @@ jobs:
         run: echo "Deploying tag ${{ inputs.tag }} to ${{ inputs.env }} environment"
 
       - name: Build Docker image
-        run: docker build -t my-nestjs-app:${{ inputs.tag }} .
+        run: docker build -t std-onboarding-api:${{ inputs.tag }} .
