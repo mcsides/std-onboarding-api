@@ -14,11 +14,15 @@ on:
         options:
           - stage
           - prod
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout code at tag: ${{ inputs.tag }}' 
+      - name: Checkout code at selected tag
         uses: actions/checkout@v3
         with:
           ref: ${{ inputs.tag }}
+
+      - name: Display deployment target
+        run: echo "Deploying tag ${{ inputs.tag }} to ${{ inputs.env }} environment"
