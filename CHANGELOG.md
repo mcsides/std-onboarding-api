@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/mcsides/std-onboarding-api/compare/v1.1.2...v1.1.3) (2025-06-03)
+
+
+### Bug Fixes
+
+* implementing a dockerize job after release ([0062eb6](https://github.com/mcsides/std-onboarding-api/commit/0062eb6d638b86f06021a4680ed4dbe594c2843c))
+
 ## [1.1.2](https://github.com/mcsides/std-onboarding-api/compare/v1.1.1...v1.1.2) (2025-06-02)
 
 
