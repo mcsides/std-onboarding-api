@@ -1,14 +1,16 @@
-# Use the official Node.js image as the base image
-FROM node:20
+FROM node:22-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Install yarn globally
-RUN corepack enable && corepack prepare yarn@stable --activate
+# Enable Corepack and prepare Yarn
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Optional: Verify Yarn is working
+RUN yarn --version
+
+# Copy package.json, package-lock.json, and yarn.lock to the working directory
+COPY package.json yarn.lock ./
 
 # Install the application dependencies
 RUN yarn install --frozen-lockfile
@@ -17,7 +19,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Build the NestJS application
-RUN npm run build
+RUN yarn build
 
 # Expose the application port
 EXPOSE 3000
