@@ -17,6 +17,7 @@ on:
 
 jobs:
   deploy:
+    name: Deploy application
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code at tag
@@ -26,6 +27,3 @@ jobs:
 
       - name: Display deployment target
         run: echo "Deploying tag ${{ inputs.tag }} to ${{ inputs.env }} environment"
-
-      - name: Build Docker image
-        run: docker build -t std-onboarding-api:${{ inputs.tag }} .
