@@ -76,3 +76,9 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t std-onboarding-api:${{ steps.get_tag.outputs.tag }} .
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::050752613795:role/STDServiceRoleForGitHub
+          aws-region: us-east-1
