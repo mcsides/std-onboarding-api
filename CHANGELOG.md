@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/mcsides/std-onboarding-api/compare/v1.1.4...v1.1.5) (2025-06-04)
+
+
+### Bug Fixes
+
+* create a connector for aws ([#31](https://github.com/mcsides/std-onboarding-api/issues/31)) ([99342fa](https://github.com/mcsides/std-onboarding-api/commit/99342faee4cdcedf779e0f64babc4510e12c0cfb))
+
 ## [1.1.4](https://github.com/mcsides/std-onboarding-api/compare/v1.1.3...v1.1.4) (2025-06-03)
 
 
