@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/mcsides/std-onboarding-api/compare/v1.1.5...v1.1.6) (2025-06-04)
+
+
+### Bug Fixes
+
+* set correct wf permissions ([#32](https://github.com/mcsides/std-onboarding-api/issues/32)) ([97a3c4d](https://github.com/mcsides/std-onboarding-api/commit/97a3c4d0efa6f64cefe9a0ab10073eb2f3c4b53c))
+
 ## [1.1.5](https://github.com/mcsides/std-onboarding-api/compare/v1.1.4...v1.1.5) (2025-06-04)
 
 
