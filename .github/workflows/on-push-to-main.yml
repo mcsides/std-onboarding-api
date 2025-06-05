@@ -61,6 +61,8 @@ jobs:
     name: Dockerize application
     runs-on: ubuntu-latest
     needs: release
+    env:
+      ECR_REPO: std-onboarding-api-repo
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -77,12 +79,26 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.get_tag.outputs.tag }}
-
-      - name: Build Docker image
-        run: docker build -t std-onboarding-api:${{ steps.get_tag.outputs.tag }} .
       
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::050752613795:role/STDServiceRoleForGitHub
           aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: docker build -t std-onboarding-api:${{ steps.get_tag.outputs.tag }} .
+
+      - name: Tag Docker image
+        run: |
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPO/std-onboarding-api:${{ steps.get_tag.outputs.tag }}"
+          docker tag std-onboarding-api:${{ steps.get_tag.outputs.tag }} $IMAGE_URI
+
+      - name: Push Docker image to ECR
+        run: |
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPO/std-onboarding-api:${{ steps.get_tag.outputs.tag }}"
+          docker push $IMAGE_URI
