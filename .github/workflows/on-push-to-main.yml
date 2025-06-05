@@ -61,6 +61,8 @@ jobs:
     name: Dockerize application
     runs-on: ubuntu-latest
     needs: release
+    env:
+      ECR_REPO: std-onboarding-api-repo
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -93,10 +95,10 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/std-onboarding-api:${{ steps.get_tag.outputs.tag }}"
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPO/std-onboarding-api:${{ steps.get_tag.outputs.tag }}"
           docker tag std-onboarding-api:${{ steps.get_tag.outputs.tag }} $IMAGE_URI
 
       - name: Push Docker image to ECR
         run: |
-          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/std-onboarding-api:${{ steps.get_tag.outputs.tag }}"
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPO/std-onboarding-api:${{ steps.get_tag.outputs.tag }}"
           docker push $IMAGE_URI
