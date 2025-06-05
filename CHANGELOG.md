@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/mcsides/std-onboarding-api/compare/v1.1.6...v1.2.0) (2025-06-05)
+
+
+### Features
+
+* push docker image to ECR ([#34](https://github.com/mcsides/std-onboarding-api/issues/34)) ([3ee1599](https://github.com/mcsides/std-onboarding-api/commit/3ee15997a1501ea3e74c2fad312673eb01db9f33))
+
 ## [1.1.6](https://github.com/mcsides/std-onboarding-api/compare/v1.1.5...v1.1.6) (2025-06-04)
 
 
