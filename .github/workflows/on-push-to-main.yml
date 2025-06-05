@@ -61,8 +61,6 @@ jobs:
     name: Dockerize application
     runs-on: ubuntu-latest
     needs: release
-    env:
-      ECR_REPO: std-onboarding-api-repo
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -91,14 +89,14 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build Docker image
-        run: docker build -t std-onboarding-api:${{ steps.get_tag.outputs.tag }} .
-
-      - name: Tag Docker image
+        id: build_image
         run: |
-          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ steps.get_tag.outputs.tag }}"
-          docker tag std-onboarding-api:${{ steps.get_tag.outputs.tag }} $IMAGE_URI
+          GITHUB_REPO_NAME=$(echo "${GITHUB_REPOSITORY}" | cut -d'/' -f2)
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$GITHUB_REPO_NAME:${{ steps.get_tag.outputs.tag }}"
+          docker build -t $GITHUB_REPO_NAME:${{ steps.get_tag.outputs.tag }} .
+          docker tag $GITHUB_REPO_NAME:${{ steps.get_tag.outputs.tag }} $IMAGE_URI
+          echo "image_uri=$IMAGE_URI" >> $GITHUB_OUTPUT
 
       - name: Push Docker image to ECR
         run: |
-          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ steps.get_tag.outputs.tag }}"
-          docker push $IMAGE_URI
+          docker push ${{ steps.build_image.outputs.repo_name }}
