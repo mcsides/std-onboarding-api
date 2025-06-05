@@ -99,4 +99,4 @@ jobs:
 
       - name: Push Docker image to ECR
         run: |
-          docker push ${{ steps.build_image.outputs.repo_name }}
+          docker push ${{ steps.build_image.outputs.image_uri }}
