@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/mcsides/std-onboarding-api/compare/v1.2.2...v1.2.3) (2025-06-05)
+
+
+### Bug Fixes
+
+* push to ecr ([#38](https://github.com/mcsides/std-onboarding-api/issues/38)) ([84a3bac](https://github.com/mcsides/std-onboarding-api/commit/84a3bac932e74a52551f0a3079ed127ced579242))
+
 ## [1.2.2](https://github.com/mcsides/std-onboarding-api/compare/v1.2.1...v1.2.2) (2025-06-05)
 
 
