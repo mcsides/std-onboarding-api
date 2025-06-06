@@ -71,7 +71,7 @@ jobs:
         id: get_tag
         run: |
           git fetch --tags --force
-          tag=$(git describe --tags --abbrev=0)
+          tag=$(git tag --sort=-creatordate | head -n 1)
           echo "Latest tag is: $tag"
           echo "tag=$tag" >> $GITHUB_OUTPUT
 
