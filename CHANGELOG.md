@@ -1,3 +1,11 @@
+## [1.2.5](https://github.com/mcsides/std-onboarding-api/compare/v1.2.4...v1.2.5) (2025-06-08)
+
+
+### Bug Fixes
+
+* introduce generic workflows for release ([#41](https://github.com/mcsides/std-onboarding-api/issues/41)) ([8f4123e](https://github.com/mcsides/std-onboarding-api/commit/8f4123ebe42676185bf9ad1c585e2d783fce9f29))
+* use generic workflows ([6ce9255](https://github.com/mcsides/std-onboarding-api/commit/6ce92552935922b1fb5b157215c271ac00f3994a))
+
 ## [1.2.4](https://github.com/mcsides/std-onboarding-api/compare/v1.2.3...v1.2.4) (2025-06-06)
 
 
