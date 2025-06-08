@@ -5,14 +5,14 @@ on:
     branches:
       - main
     types:
-        - opened
-        - synchronize
-        - reopened
-        - edited
+      - opened
+      - synchronize
+      - reopened
+      - edited
 
 jobs:
-  build-inboarding-api:
-    name: Build Inboarding API
+  build-onboarding-api:
+    name: Build Onboarding API
     uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-pipe.yml@main
     with:
       node-version: "22"
