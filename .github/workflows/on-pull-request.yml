@@ -5,38 +5,16 @@ on:
     branches:
       - main
     types:
-        - opened
-        - synchronize
-        - reopened
-        - edited
+      - opened
+      - synchronize
+      - reopened
+      - edited
 
 jobs:
-  build:
-    name: Build Application
-    runs-on: ubuntu-latest
-    steps:
-      - name: Lint PR title with commitlint
-        uses: wagoid/commitlint-github-action@v6
-
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
-      - name: Clean and install
-        run: yarn install --frozen-lockfile
-
-      - name: Lint code
-        run: yarn lint
-
-      - name: Run unit tests
-        run: yarn test:unit
-
-      - name: Run integration tests
-        run: yarn test:integration
-
-      - name: Build binaries
-        run: yarn build
+  build-onboarding-api:
+    name: Build Onboarding API
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-pipe.yml@main
+    with:
+      node-version: "22"
+      release-mode: false
+    secrets: inherit
