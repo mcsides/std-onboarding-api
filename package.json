@@ -18,7 +18,14 @@
     "test:integration": "docker compose up -d && jest --config jest.config.integration.json && docker compose down",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "tf:init": "cd infra/envs/stg && terraform init",
+    "tf:plan": "cd infra/envs/stg && terraform plan",
+    "tf:apply": "cd infra/envs/stg && terraform apply --auto-approve",
+    "tf:destroy": "cd infra/envs/stg && terraform destroy --auto-approve",
+    "tf:output": "cd infra/envs/stg && terraform output",
+    "tf:format": "cd infra/envs/stg && terraform fmt -recursive",
+    "tf:format:check": "cd infra/envs/stg && terraform fmt -recursive -check"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
