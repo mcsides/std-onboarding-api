@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/mcsides/std-onboarding-api/compare/v1.2.5...v1.2.6) (2025-06-11)
+
+
+### Bug Fixes
+
+* adding infra ([#42](https://github.com/mcsides/std-onboarding-api/issues/42)) ([99586e5](https://github.com/mcsides/std-onboarding-api/commit/99586e5ff1b637d59a98ad6b9e36fd2ca45ce1af))
+
 ## [1.2.5](https://github.com/mcsides/std-onboarding-api/compare/v1.2.4...v1.2.5) (2025-06-08)
 
 
