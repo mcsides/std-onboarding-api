@@ -18,7 +18,7 @@ on:
 jobs:
   deploy-onboarding-api:
     name: Release Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-pipe.yml@v1.1.0
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy-pipe.yml@main
     with:
       tag: ${{ inputs.tag }}
       env: ${{ inputs.env }}
