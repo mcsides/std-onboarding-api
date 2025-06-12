@@ -4,13 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       env:
-        description: 'Select environment'
+        description: 'Select environment to deploy to'
         required: true
         type: choice
+        default: stg
         options:
           - stg
           - prod
 
+permissions:
+  id-token: write
+  contents: write
+  
 jobs:
   deploy-onboarding-api:
     name: Release Onboarding API
