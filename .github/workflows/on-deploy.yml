@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       env:
-        description: 'Select environment to deploy'
+        description: 'Select environment'
         required: true
         type: choice
         options:
