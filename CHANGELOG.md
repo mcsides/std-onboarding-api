@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/mcsides/std-onboarding-api/compare/v1.2.6...v1.3.0) (2025-06-12)
+
+
+### Features
+
+* add deployment stage ([#43](https://github.com/mcsides/std-onboarding-api/issues/43)) ([74590e7](https://github.com/mcsides/std-onboarding-api/commit/74590e7a6b7b427eb868807a2ff017fe9968220e))
+
 ## [1.2.6](https://github.com/mcsides/std-onboarding-api/compare/v1.2.5...v1.2.6) (2025-06-11)
 
 
