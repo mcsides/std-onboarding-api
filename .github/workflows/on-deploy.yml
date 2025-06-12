@@ -3,10 +3,9 @@ name: On Deploy
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Git tag to deploy from (e.g., v1.2.3)'
+      branch:
+        description: 'Select branch or tag to deploy'
         required: true
-        type: string
       env:
         description: 'Select environment to deploy'
         required: true
@@ -18,9 +17,9 @@ on:
 jobs:
   deploy-onboarding-api:
     name: Release Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy-pipe.yml@v1.1.1
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy-pipe.yml@main
     with:
-      tag: ${{ inputs.tag }}
+      branch: ${{ inputs.branch }}
       env: ${{ inputs.env }}
       gb_project_key: ${{ vars.GB_PK }}
       gb_app_name: ${{ vars.GB_APP_NAME }}
