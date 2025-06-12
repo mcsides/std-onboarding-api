@@ -12,47 +12,15 @@ on:
         required: true
         type: choice
         options:
-          - stage
+          - stg
           - prod
 
 jobs:
-  deploy:
-    name: Deploy application
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code at tag
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ inputs.tag }}
-
-      - name: Display deployment target
-        run: echo "Deploying tag ${{ inputs.tag }} to ${{ inputs.env }} environment"
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::050752613795:role/STDServiceRoleForGitHub
-          aws-region: us-east-1
-          
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Update ECS service
-        env:
-          AWS_REGION: us-east-1
-          ECR_REPO: std-onboarding-api-repo
-          TAG_NO_V: ${{ inputs.tag }}
-        run: |
-          TAG_NO_V=$(echo "${TAG_NO_V}" | sed 's/^v//')
-          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/${ECR_REPO}:${TAG_NO_V}"
-          echo "Deploying image: $IMAGE_URI"
-          aws ecs update-service \
-            --cluster std-stg-ecs-cluster-${{ inputs.env }} \
-            --service std-onboarding-api-${{ inputs.env }} \
-            --force-new-deployment \
-            --region $AWS_REGION \
-            --output json \
-            --deployment-configuration "maximumPercent=200,minimumHealthyPercent=100" \
-            --desired-count 1 \
-            --no-cli-pager
+  deploy-onboarding-api:
+    name: Release Onboarding API
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-pipe.yml@v1.1.0
+    with:
+      tag: ${{ inputs.tag }}
+      env: ${{ inputs.env }}
+      gb_project_key: ${{ vars.GB_PK }}
+      gb_app_name: ${{ vars.GB_APP_NAME }}
