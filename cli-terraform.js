@@ -78,4 +78,12 @@ program
     runTerraform(cmd, options.env);
   });
 
+  program
+  .command('output-all')
+  .description('Run terraform output -json to get all outputs in JSON format')
+  .requiredOption('-e, --env <environment>', 'Specify environment (required)')
+  .action((options) => {
+    runTerraform('output -json', options.env);
+  });
+  
 program.parse(process.argv);

@@ -8,15 +8,6 @@ data "terraform_remote_state" "stamper_labs_stg" {
   }
 }
 
-data "terraform_remote_state" "stamper_labs_prod" {
-  backend = "s3"
-  config = {
-    bucket = "stamper-labs-tfstate-bucket"
-    key    = "base-infra/prod/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
-
 module "ecs_task_definition_onboarding_api" {
   source                   = "../../module/ecs_task_definition"
   td_family                = "std-stg-ecs-ftask-onboarding-api"
@@ -30,4 +21,16 @@ module "ecs_task_definition_onboarding_api" {
     )
   td_execution_role_arn = data.terraform_remote_state.stamper_labs_stg.outputs.ecs_task_execution_role_arn
   env_tag                  = "stg"
+}
+
+output "onboarding_api_task_definition_arn" {
+  value = module.ecs_task_definition_onboarding_api.task_definition_arn
+}
+
+output "vpc_subnet_id" {
+  value = data.terraform_remote_state.stamper_labs_stg.outputs.vpc_subnet_id
+}
+
+output "allow_http_security_group_id" {
+  value = data.terraform_remote_state.stamper_labs_stg.outputs.allow_http_security_group_id
 }
