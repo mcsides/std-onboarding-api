@@ -2,7 +2,6 @@
 
 const { Command } = require('commander');
 const { spawn } = require('child_process');
-
 const program = new Command();
 
 program
