@@ -19,13 +19,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "tf:stg:init": "cd infra/envs/stg && terraform init",
-    "tf:stg:plan": "cd infra/envs/stg && terraform plan",
-    "tf:stg:apply": "cd infra/envs/stg && terraform apply --auto-approve",
-    "tf:stg:destroy": "cd infra/envs/stg && terraform destroy --auto-approve",
-    "tf:stg:output": "cd infra/envs/stg && terraform output",
-    "tf:stg:format": "cd infra/envs/stg && terraform fmt -recursive",
-    "tf:stg:format:check": "cd infra/envs/stg && terraform fmt -recursive -check"
+    "tf:init": "node cli-terraform.js init",
+    "tf:plan": "node cli-terraform.js plan",
+    "tf:apply": "node cli-terraform.js apply",
+    "tf:destroy": "node cli-terraform.js destroy"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -36,6 +33,7 @@
     "@nestjs/swagger": "^11.2.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
+    "commander": "^14.0.0",
     "mongoose": "^8.15.0",
     "otplib": "^12.0.1",
     "reflect-metadata": "^0.2.2",
