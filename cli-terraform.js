@@ -24,6 +24,7 @@ function runTerraform(cmd, env) {
       console.log(`✅ terraform ${cmd} for ${env} completed successfully.`);
     } else {
       console.error(`❌ terraform ${cmd} for ${env} failed with exit code ${code}`);
+      process.exit(code);
     }
   });
 }
