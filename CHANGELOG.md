@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/mcsides/std-onboarding-api/compare/v1.3.2...v1.4.0) (2025-06-13)
+
+
+### Features
+
+* adding deployment generic workflow ([7042c0b](https://github.com/mcsides/std-onboarding-api/commit/7042c0bc48208b81e8b5307bfee9a103eda2d64e))
+
 ## [1.3.2](https://github.com/mcsides/std-onboarding-api/compare/v1.3.1...v1.3.2) (2025-06-12)
 
 
