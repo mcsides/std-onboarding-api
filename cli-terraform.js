@@ -20,9 +20,7 @@ function runTerraform(cmd, env) {
     shell: true 
   });
   terraformProcess.on('exit', code => {
-    if (code === 0) {
-      console.log(`✅ terraform ${cmd} for ${env} completed successfully.`);
-    } else {
+    if (code !== 0) {
       console.error(`❌ terraform ${cmd} for ${env} failed with exit code ${code}`);
       process.exit(code);
     }
@@ -85,5 +83,5 @@ program
   .action((options) => {
     runTerraform('output -json', options.env);
   });
-  
+
 program.parse(process.argv);
