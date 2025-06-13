@@ -11,7 +11,6 @@ program
   .version('1.0.0');
 
 function runTerraform(cmd, env) {
-  console.log(`Running: terraform ${cmd} for environment: ${env}`);
   const envDir = `./infra/envs/${env}`; 
   const shellCommand = `cd ${envDir} && terraform ${cmd}`;
 
