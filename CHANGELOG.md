@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/mcsides/std-onboarding-api/compare/v1.4.1...v1.4.2) (2025-06-14)
+
+
+### Bug Fixes
+
+* upgrade to core flows v1.4.0 ([#49](https://github.com/mcsides/std-onboarding-api/issues/49)) ([2467094](https://github.com/mcsides/std-onboarding-api/commit/24670948879d018178b313533b1728fcd7485dd1))
+
 ## [1.4.1](https://github.com/mcsides/std-onboarding-api/compare/v1.4.0...v1.4.1) (2025-06-14)
 
 
