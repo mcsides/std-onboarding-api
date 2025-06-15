@@ -1,4 +1,4 @@
-name: On push tag
+name: On Deploy
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ permissions:
   
 jobs:
   deploy-onboarding-api:
-    name: Release Onboarding API
+    name: Deploy Onboarding API
     uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy-pipe.yml@fix/keys
     with:
       branch: ${{ github.ref_name }}
