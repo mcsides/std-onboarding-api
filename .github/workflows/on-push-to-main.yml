@@ -12,7 +12,7 @@ permissions:
 jobs:
   release-onboarding-api:
     name: Release Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-pipe.yml@v1.4.2
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-pipe.yml@v1.4.3
     with:
       node-version: "22"
       release-mode: true
