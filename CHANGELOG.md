@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/mcsides/std-onboarding-api/compare/v1.4.4...v1.4.5) (2025-06-15)
+
+
+### Bug Fixes
+
+* update the container definition ([#53](https://github.com/mcsides/std-onboarding-api/issues/53)) ([94e72a8](https://github.com/mcsides/std-onboarding-api/commit/94e72a80814ac41d2aa2e90d4b3be1f127c76595))
+
 ## [1.4.4](https://github.com/mcsides/std-onboarding-api/compare/v1.4.3...v1.4.4) (2025-06-15)
 
 
