@@ -1,4 +1,4 @@
-name: On Deploy
+name: On push tag
 
 on:
   workflow_dispatch:
@@ -23,5 +23,5 @@ jobs:
     with:
       branch: ${{ github.ref_name }}
       env: ${{ inputs.env }}
-      gb_project_key: ${{ vars.GB_PK }}
-      gb_app_name: ${{ vars.GB_APP_NAME }}
+      gb_project_key: std
+      gb_app_name: onboarding-api
