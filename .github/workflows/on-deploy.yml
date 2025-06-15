@@ -18,10 +18,10 @@ permissions:
   
 jobs:
   deploy-onboarding-api:
-    name: Release Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy-pipe.yml@v1.4.0
+    name: Deploy Onboarding API
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy-pipe.yml@v1.4.1
     with:
       branch: ${{ github.ref_name }}
       env: ${{ inputs.env }}
-      gb_project_key: ${{ vars.GB_PK }}
-      gb_app_name: ${{ vars.GB_APP_NAME }}
+      gb_project_key: std
+      gb_app_name: onboarding-api
