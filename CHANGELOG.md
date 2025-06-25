@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/mcsides/std-onboarding-api/compare/v1.4.5...v1.4.6) (2025-06-25)
+
+
+### Bug Fixes
+
+* use parallel actions ([ed8b153](https://github.com/mcsides/std-onboarding-api/commit/ed8b153f8c8a2dcdc6f4e84bdea347646cf2317d))
+
 ## [1.4.5](https://github.com/mcsides/std-onboarding-api/compare/v1.4.4...v1.4.5) (2025-06-15)
 
 
