@@ -13,7 +13,7 @@ on:
 jobs:
   build-onboarding-api:
     name: Build Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@release-from-main
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@v1.7.0
     with:
       node-version: "22"
       deployment-mode: false
