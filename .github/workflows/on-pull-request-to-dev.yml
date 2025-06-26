@@ -3,7 +3,7 @@ name: On Pull Request
 on:
   pull_request:
     branches:
-      - main
+      - dev
     types:
       - opened
       - synchronize
@@ -13,8 +13,8 @@ on:
 jobs:
   build-onboarding-api:
     name: Build Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@v1.7.0
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@feat-refactor
     with:
-      node-version: "22"
-      deployment-mode: false
+      node_version: "22"
+      release_mode: "no"
     secrets: inherit
