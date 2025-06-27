@@ -1,4 +1,4 @@
-name: On Pull Request
+name: On Pull Request To Dev
 
 on:
   pull_request:
@@ -11,8 +11,8 @@ on:
       - edited
 
 jobs:
-  build-onboarding-api:
-    name: Build Onboarding API
+  build:
+    name: Build
     uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@v1.8.0
     with:
       node_version: "22"
