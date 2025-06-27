@@ -12,19 +12,16 @@ permissions:
 jobs:
   build-onboarding-api:
     name: Build Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@feat-refactor
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@v1.8.0
     secrets: inherit
 
   dockerize-onboarding-api:
     needs: build-onboarding-api
     name: Dockerize Onboarding API
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-dockerize.yml@feat-refactor
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-dockerize.yml@v1.8.0
 
   deploy-onboarding-api:
     needs: dockerize-onboarding-api
     name: Deploy Onboarding API to STG
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy.yml@feat-refactor
-    with:
-      gh_project_key: "std"
-      gh_app_name: "onboarding-api"
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-deploy.yml@v1.8.0
     secrets: inherit
