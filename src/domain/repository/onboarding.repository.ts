@@ -22,25 +22,16 @@ export class OnboardingRepository {
       .exec()
       .then((onboardingFound) => {
         if (onboardingFound) {
-          this.logger.debug(
-            `Onboarding found by criteria: ${JSON.stringify(payload)}`,
-          );
+          this.logger.debug(`Onboarding found by criteria: ${JSON.stringify(payload)}`);
           return this.fromDocToEntity(onboardingFound);
         } else {
-          this.logger.debug(
-            `Onboarding not found by criteria: ${JSON.stringify(payload)}`,
-          );
+          this.logger.debug(`Onboarding not found by criteria: ${JSON.stringify(payload)}`);
           return undefined;
         }
       })
       .catch((error) => {
-        this.logger.error(
-          `Unexpected error while fetching onboarding by criteria: ${JSON.stringify(payload)} `,
-          error,
-        );
-        throw new InternalServerErrorException(
-          `Failed to fetch onboarding by criteria: ${JSON.stringify(payload)}`,
-        );
+        this.logger.error(`Unexpected error while fetching onboarding by criteria: ${JSON.stringify(payload)} `, error);
+        throw new InternalServerErrorException(`Failed to fetch onboarding by criteria: ${JSON.stringify(payload)}`);
       });
   }
 
@@ -50,20 +41,33 @@ export class OnboardingRepository {
     return this.onboardingModel
       .create(doc)
       .then((docCreated) => {
-        this.logger.debug(
-          `Onboarding created with id: ${onboardingId} and email: ${docCreated.email}`,
-        );
+        this.logger.debug(`Onboarding created with id: ${onboardingId} and email: ${docCreated.email}`);
         return this.fromDocToEntity(docCreated);
       })
       .catch((error) => {
-        this.logger.error(
-          `Unexpected error while creating an onboarding. onboardingId: ${onboardingId} `,
-          error,
-        );
-        throw new InternalServerErrorException(
-          `Failed to create onboarding. onboardingId: ${onboardingId}`,
-        );
+        this.logger.error(`Unexpected error while creating an onboarding. onboardingId: ${onboardingId} `, error);
+        throw new InternalServerErrorException(`Failed to create onboarding. onboardingId: ${onboardingId}`);
       });
+  }
+
+  async patch(onboardingId: string, status :OnboardingStatus): Promise<Onboarding> {
+    this.logger.debug(`Updating onboarding with id: ${onboardingId} to status: ${status}`);
+    return this.onboardingModel.findOneAndUpdate(
+      { onboardingId: onboardingId },
+      { $set: { status: status } },
+      { new: true }
+    ).then((docUpdated) => {
+      if (!docUpdated) {
+        this.logger.error(`Onboarding not found for update - onboardingId: ${onboardingId}`);
+        throw new InternalServerErrorException(`Onboarding not found for update  - onboardingId: ${onboardingId}`);
+      } else {
+        this.logger.debug(`Onboarding found and updated - onboardingId: ${onboardingId}`);
+        return this.fromDocToEntity(docUpdated);
+      }
+    }).catch((error) => {
+      this.logger.error(`Unexpected error while updating onboarding - onboardingId: ${onboardingId}`, error);
+      throw new InternalServerErrorException(`Failed to update onboarding - onboardingId: ${onboardingId}`);
+    });
   }
 
   private fromEntityToDoc(onboarding: Onboarding): OnboardingDocument {
