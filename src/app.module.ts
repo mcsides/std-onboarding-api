@@ -23,6 +23,11 @@ import { ValidateOtpUsecase } from './usecase/validate-otp-usecase';
     ]),
   ],
   controllers: [EmailController, OtpController],
-  providers: [ValidateEmailUsecase, OnboardingRepository, SendOtpUsecase, ValidateOtpUsecase],
+  providers: [
+    ValidateEmailUsecase,
+    OnboardingRepository,
+    SendOtpUsecase,
+    ValidateOtpUsecase,
+  ],
 })
 export class AppModule {}
