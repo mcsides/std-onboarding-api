@@ -16,28 +16,28 @@ export class OnboardingRepository {
     this.logger = new Logger(OnboardingRepository.name);
   }
 
-  async findByEmail(email: string): Promise<Onboarding | void> {
+  async findBy(payload: Record<string, any>): Promise<Onboarding | void> {
     return this.onboardingModel
-      .findOne({ email })
+      .findOne(payload)
       .exec()
       .then((onboardingFound) => {
         if (onboardingFound) {
           this.logger.debug(
-            `Onboarding found by email: ${onboardingFound.email} — onboardingId: ${onboardingFound.onboardingId}`,
+            `Onboarding found by criteria: ${JSON.stringify(payload)}`,
           );
           return this.fromDocToEntity(onboardingFound);
         } else {
-          this.logger.warn(`Onboarding not found by email: ${email}`);
+          this.logger.debug(`Onboarding not found by criteria: ${JSON.stringify(payload)}`);
           return undefined;
         }
       })
       .catch((error) => {
         this.logger.error(
-          `Unexpected error while fetching onboarding by email: ${email} `,
+          `Unexpected error while fetching onboarding by criteria: ${JSON.stringify(payload)} `,
           error,
         );
         throw new InternalServerErrorException(
-          `Failed to fetch onboarding by email: ${email}`,
+          `Failed to fetch onboarding by criteria: ${JSON.stringify(payload)}`,
         );
       });
   }
@@ -48,6 +48,7 @@ export class OnboardingRepository {
     return this.onboardingModel
       .create(doc)
       .then((docCreated) => {
+        this.logger.debug(`Onboarding created with id: ${onboardingId} and email: ${docCreated.email}`);
         return this.fromDocToEntity(docCreated);
       })
       .catch((error) => {

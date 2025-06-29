@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
-import { EmailStatus } from './email-status';
+import { EmailStatus } from '../domain/entity/email-status.enum';
 import { OnboardingRepository } from '../domain/repository/onboarding.repository';
 import { OnboardingStatus } from '../domain/entity/onboarding-status.enum';
 import { Onboarding } from '../domain/entity/onboarding';
@@ -18,14 +18,15 @@ export class ValidateEmailUsecase {
   ): Promise<[Onboarding, EmailStatus]> {
     this.logger.log(`Starting to validate the email: ${email}`);
     return this.onboardingRepository
-      .findByEmail(email)
+      .findBy({'email': email})
       .then((onboardingFound) => {
-        this.logger.log(onboardingFound);
+        this.logger.log(`Onboarding found for email: ${email}`);
         if (onboardingFound) {
           if (OnboardingStatus.INITIATED === onboardingFound.getStatus()) {
+            this.logger.log(`Onboarding is available for email: ${email}`);
             return [onboardingFound, EmailStatus.AVAILABLE];
           } else {
-            this.logger.error(`The email is already taken: ${email}`);
+            this.logger.warn(`The email is already taken: ${email}`);
             return [onboardingFound, EmailStatus.ALREADY_TAKEN];
           }
         } else {
@@ -34,10 +35,10 @@ export class ValidateEmailUsecase {
             .setStatus(OnboardingStatus.INITIATED)
             .setEmail(email)
             .build();
-
           return this.onboardingRepository
             .createOnboarding(obToCreate)
             .then((onboardingCreated) => {
+              this.logger.log(`Onboarding created for email: ${email}`);
               return [onboardingCreated, EmailStatus.AVAILABLE];
             });
         }

@@ -1,10 +1,8 @@
 {
-  "workbench.colorTheme": "One Monokai",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.colorTheme": "Default Dark Modern",
   "editor.formatOnSave": false,
   "editor.wordWrap": "off",
   "editor.tabSize": 2,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "terminal.integrated.fontFamily": "FiraCode Nerd Font",
-  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace, 'FiraCode Nerd Font’",
 }

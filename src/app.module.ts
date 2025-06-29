@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EmailController } from './controllers/v1/email.controller';
+import { OtpController } from './controllers/v1/otp.controller';
 import { ValidateEmailUsecase } from './usecase/validate-email.usecase';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
@@ -8,6 +9,7 @@ import {
   OnboardingSchema,
 } from './domain/repository/schema/onboarding-document.schema';
 import { OnboardingRepository } from './domain/repository/onboarding.repository';
+import { SendOtpUsecase } from './usecase/send-otp.usecase';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { OnboardingRepository } from './domain/repository/onboarding.repository'
       { name: OnboardingDocument.name, schema: OnboardingSchema },
     ]),
   ],
-  controllers: [EmailController],
-  providers: [ValidateEmailUsecase, OnboardingRepository],
+  controllers: [EmailController, OtpController],
+  providers: [ValidateEmailUsecase, OnboardingRepository, SendOtpUsecase],
 })
 export class AppModule {}
