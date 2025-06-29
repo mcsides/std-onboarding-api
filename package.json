@@ -23,7 +23,8 @@
     "tf:plan": "node cli-terraform.js plan",
     "tf:apply": "node cli-terraform.js apply",
     "tf:destroy": "node cli-terraform.js destroy",
-    "tf:output": "node cli-terraform.js output-all"
+    "tf:output": "node cli-terraform.js output-all",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

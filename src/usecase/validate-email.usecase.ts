@@ -18,7 +18,7 @@ export class ValidateEmailUsecase {
   ): Promise<[Onboarding, EmailStatus]> {
     this.logger.log(`Starting to validate the email: ${email}`);
     return this.onboardingRepository
-      .findBy({'email': email})
+      .findBy({ email: email })
       .then((onboardingFound) => {
         this.logger.log(`Onboarding found for email: ${email}`);
         if (onboardingFound) {

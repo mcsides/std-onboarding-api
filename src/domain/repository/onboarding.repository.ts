@@ -27,7 +27,9 @@ export class OnboardingRepository {
           );
           return this.fromDocToEntity(onboardingFound);
         } else {
-          this.logger.debug(`Onboarding not found by criteria: ${JSON.stringify(payload)}`);
+          this.logger.debug(
+            `Onboarding not found by criteria: ${JSON.stringify(payload)}`,
+          );
           return undefined;
         }
       })
@@ -48,7 +50,9 @@ export class OnboardingRepository {
     return this.onboardingModel
       .create(doc)
       .then((docCreated) => {
-        this.logger.debug(`Onboarding created with id: ${onboardingId} and email: ${docCreated.email}`);
+        this.logger.debug(
+          `Onboarding created with id: ${onboardingId} and email: ${docCreated.email}`,
+        );
         return this.fromDocToEntity(docCreated);
       })
       .catch((error) => {

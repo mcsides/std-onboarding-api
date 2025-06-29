@@ -5,7 +5,7 @@ export class Onboarding {
     private readonly onboardingId: string,
     private readonly status: OnboardingStatus,
     private readonly email: string,
-    private readonly mobile?: number
+    private readonly mobile?: number,
   ) {}
 
   getOnboardingId(): string {
@@ -70,6 +70,7 @@ class OnboardingBuilder {
       this.onboardingId,
       this.status,
       this.email,
-      this.mobile    );
+      this.mobile,
+    );
   }
 }
