@@ -10,6 +10,7 @@ import {
 } from './domain/repository/schema/onboarding-document.schema';
 import { OnboardingRepository } from './domain/repository/onboarding.repository';
 import { SendOtpUsecase } from './usecase/send-otp.usecase';
+import { ValidateOtpUsecase } from './usecase/validate-otp-usecase';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { SendOtpUsecase } from './usecase/send-otp.usecase';
     ]),
   ],
   controllers: [EmailController, OtpController],
-  providers: [ValidateEmailUsecase, OnboardingRepository, SendOtpUsecase],
+  providers: [ValidateEmailUsecase, OnboardingRepository, SendOtpUsecase, ValidateOtpUsecase],
 })
 export class AppModule {}
