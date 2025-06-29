@@ -25,7 +25,7 @@ export class OtpController {
 
   @Post('/send')
   @ApiNoContentResponse({
-    description: 'The otp has been sent for email confirmation.'
+    description: 'The otp has been sent for email confirmation.',
   })
   async sendOtp(
     @Headers('X-Onboarding-Id') onboardingId: string,
@@ -51,7 +51,7 @@ export class OtpController {
 
   @Post('/confirm')
   @ApiNoContentResponse({
-    description: 'The otp has been confirmed.'
+    description: 'The otp has been confirmed.',
   })
   async validateOtp(
     @Headers('X-Onboarding-Id') onboardingId: string,
