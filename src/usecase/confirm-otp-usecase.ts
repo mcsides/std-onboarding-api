@@ -5,11 +5,11 @@ import { Injectable } from '@nestjs/common';
 import { authenticator } from 'otplib';
 
 @Injectable()
-export class ValidateOtpUsecase {
+export class ConfirmOtpUsecase {
   private readonly logger: Logger;
 
   constructor(private readonly onboardingRepository: OnboardingRepository) {
-    this.logger = new Logger(ValidateOtpUsecase.name);
+    this.logger = new Logger(ConfirmOtpUsecase.name);
   }
 
   async exe(

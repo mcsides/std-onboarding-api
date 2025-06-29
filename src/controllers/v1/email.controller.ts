@@ -12,7 +12,7 @@ export class EmailController {
 
   @Post('/validate')
   @ApiCreatedResponse({
-    description: 'The email has been has been validated.',
+    description: 'The email has been validated.',
     type: EmailValidationDto,
   })
   async validateEmail(
