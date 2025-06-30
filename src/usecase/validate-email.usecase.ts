@@ -23,7 +23,8 @@ export class ValidateEmailUsecase {
       .then((onboardingFound) => {
         if (!onboardingFound) {
           this.logger.info(
-            { onboardingId, email },'Onboarding not found for email. Proceeding to create a new onboarding.'
+            { onboardingId, email },
+            'Onboarding not found for email. Proceeding to create a new onboarding.',
           );
           const obToCreate = Onboarding.builder()
             .setOnboardingId(onboardingId)
@@ -49,7 +50,7 @@ export class ValidateEmailUsecase {
           } else {
             this.logger.warn(
               { onboardingId, email, status: onboardingFound.getStatus() },
-              'Onboarding found with status different than INITIATED. Email already taken.'
+              'Onboarding found with status different than INITIATED. Email already taken.',
             );
             return [onboardingFound, EmailStatus.ALREADY_TAKEN];
           }

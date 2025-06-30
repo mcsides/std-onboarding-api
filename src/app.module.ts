@@ -36,18 +36,19 @@ import { IncomingMessage } from 'http';
           },
         }),
         level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
-        transport: process.env.NODE_ENV !== 'production'
-        ? { 
-            target: 'pino-pretty', 
-            options: {
-              colorize: true,
-              translateTime: 'SYS:standard',
-              singleLine: true,
-            }, 
-          }
-        : undefined,
-      }
-    })
+        transport:
+          process.env.NODE_ENV !== 'production'
+            ? {
+                target: 'pino-pretty',
+                options: {
+                  colorize: true,
+                  translateTime: 'SYS:standard',
+                  singleLine: true,
+                },
+              }
+            : undefined,
+      },
+    }),
   ],
   controllers: [EmailController, OtpController, MobileController],
   providers: [
