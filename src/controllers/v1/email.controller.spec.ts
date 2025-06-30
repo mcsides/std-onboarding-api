@@ -5,7 +5,7 @@ import { ValidateEmailUsecase } from '../../usecase/validate-email.usecase';
 import { EmailStatus } from '../../domain/entity/email-status.enum';
 import { OnboardingStatus } from '../../domain/entity/onboarding-status.enum';
 import { Onboarding } from '../../domain/entity/onboarding';
-import { PinoLogger } from 'nestjs-pino';
+import { getLoggerToken } from 'nestjs-pino';
 
 describe('EmailController', () => {
   let emailController: EmailController;
@@ -22,7 +22,7 @@ describe('EmailController', () => {
           useValue: validateEmailUsecaseMock,
         },
         {
-          provide: PinoLogger,
+          provide: getLoggerToken(EmailController.name), // <-- This is the contextual logger token
           useValue: {
             info: jest.fn(),
             error: jest.fn(),
