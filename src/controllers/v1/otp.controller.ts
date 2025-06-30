@@ -5,23 +5,23 @@ import {
   Post,
   BadRequestException,
   PreconditionFailedException,
-  Logger,
 } from '@nestjs/common';
 import { SendOtpUsecase } from '../../usecase/send-otp.usecase';
 import { ValidateEmailDto } from './dto/validate-email.dto';
 import { ValidateOtpDto } from './dto/validate-otp.dto';
 import { ConfirmOtpUsecase } from '../../usecase/confirm-otp-usecase';
 import { ApiNoContentResponse } from '@nestjs/swagger';
+import { InjectPinoLogger } from 'nestjs-pino';
+import { PinoLogger } from 'nestjs-pino';
 
 @Controller('/v1/otp')
 export class OtpController {
-  private readonly logger: Logger;
   constructor(
+    @InjectPinoLogger(OtpController.name)
+    private readonly logger: PinoLogger,
     private readonly sendOtplUsecase: SendOtpUsecase,
     private readonly confirmOtpUsecase: ConfirmOtpUsecase,
-  ) {
-    this.logger = new Logger(OtpController.name);
-  }
+  ) {}
 
   @Post('/send')
   @ApiNoContentResponse({
@@ -32,17 +32,22 @@ export class OtpController {
     @Body() validateEmailDto: ValidateEmailDto,
   ): Promise<void> {
     if (!onboardingId) {
-      this.logger.error('Missing required header: X-Onboarding-Id');
+      this.logger.error(
+        { onboardingId },
+        'Missing required header: X-Onboarding-Id',
+      );
       throw new BadRequestException('Missing required header: X-Onboarding-Id');
     }
     try {
-      this.logger.log(
-        `Sending OTP for email: ${validateEmailDto.email} with onboardingId: ${onboardingId}`,
+      this.logger.info(
+        { onboardingId },
+        `Sending OTP for email: ${validateEmailDto.email}`,
       );
       await this.sendOtplUsecase.exe(validateEmailDto.email, onboardingId);
     } catch (error) {
       this.logger.error(
-        `Failed to send OTP for email: ${validateEmailDto.email} with onboardingId: ${onboardingId}`,
+        { onboardingId },
+        `Failed to send OTP for email: ${validateEmailDto.email}`,
         error,
       );
       throw new PreconditionFailedException('Failed to send OTP');
@@ -58,7 +63,10 @@ export class OtpController {
     @Body() validateOtpDto: ValidateOtpDto,
   ): Promise<void> {
     if (!onboardingId) {
-      this.logger.error('Missing required header: X-Onboarding-Id');
+      this.logger.error(
+        { onboardingId },
+        'Missing required header: X-Onboarding-Id',
+      );
       throw new BadRequestException('Missing required header: X-Onboarding-Id');
     }
     const result = await this.confirmOtpUsecase.exe(
@@ -68,12 +76,14 @@ export class OtpController {
     );
     if (!result) {
       this.logger.error(
-        `Invalid OTP for email: ${validateOtpDto.email} with onboardingId: ${onboardingId}`,
+        { onboardingId },
+        `Invalid OTP for email: ${validateOtpDto.email}`,
       );
       throw new PreconditionFailedException('Invalid OTP');
     } else {
-      this.logger.log(
-        `OTP validated successfully for email: ${validateOtpDto.email} with onboardingId: ${onboardingId}`,
+      this.logger.info(
+        { onboardingId },
+        `OTP validated successfully for email: ${validateOtpDto.email}`,
       );
     }
   }

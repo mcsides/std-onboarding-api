@@ -5,10 +5,16 @@ import { EmailValidationDto } from './dto/email-validation.dto';
 import { EmailStatus } from '../../domain/entity/email-status.enum';
 import { v4 as uuidv4 } from 'uuid';
 import { ApiCreatedResponse } from '@nestjs/swagger';
+import { InjectPinoLogger } from 'nestjs-pino';
+import { PinoLogger } from 'nestjs-pino';
 
 @Controller('/v1/email')
 export class EmailController {
-  constructor(private readonly validateEmailUsecase: ValidateEmailUsecase) {}
+  constructor(
+    @InjectPinoLogger(EmailController.name)
+    private readonly logger: PinoLogger,
+    private readonly validateEmailUsecase: ValidateEmailUsecase,
+  ) {}
 
   @Post('/validate')
   @ApiCreatedResponse({

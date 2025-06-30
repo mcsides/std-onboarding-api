@@ -2,60 +2,61 @@ import { Injectable } from '@nestjs/common';
 import { MobileStatus } from 'src/domain/entity/mobile-status.enum';
 import { Onboarding } from 'src/domain/entity/onboarding';
 import { OnboardingRepository } from 'src/domain/repository/onboarding.repository';
-import { Logger } from '@nestjs/common';
 import { OnboardingStatus } from 'src/domain/entity/onboarding-status.enum';
+import { InjectPinoLogger } from 'nestjs-pino';
+import { PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class ValidateMobileUsecase {
-  private readonly logger: Logger;
-
-  constructor(private readonly onboardingRepository: OnboardingRepository) {
-    this.logger = new Logger(ValidateMobileUsecase.name);
-  }
+  constructor(
+    @InjectPinoLogger(OnboardingRepository.name)
+    private readonly logger: PinoLogger,
+    private readonly onboardingRepository: OnboardingRepository,
+  ) {}
 
   async exe(
     onboardingId: string,
     mobile: string,
   ): Promise<[Onboarding, MobileStatus]> {
-    this.logger.log(
-      `Starting to validate mobile - onboardingId ${onboardingId}, mobile ${mobile}`,
-    );
-    const onboardingFound = await this.onboardingRepository.findBy({
-      mobile: mobile,
-    });
+    this.logger.info({ onboardingId, mobile }, 'Start mobile validation');
+    const onboardingFound =
+      await this.onboardingRepository.findByMobile(mobile);
     if (!onboardingFound) {
-      this.logger.log(
-        `Onboarding not found with mobile - onboardingId ${onboardingId}, mobile: ${mobile}`,
+      this.logger.info(
+        { onboardingId, mobile },
+        'Onboarding not found with mobile.',
       );
-      const onboardingConf = await this.onboardingRepository.findBy({
-        onboardingId: onboardingId,
-        status: OnboardingStatus.EMAIL_CONFIRMED,
-      });
+      const onboardingConf = await this.onboardingRepository.findByIdAndStatus(
+        onboardingId,
+        OnboardingStatus.EMAIL_CONFIRMED,
+      );
       if (!onboardingConf) {
         this.logger.error(
-          `Onboarding with email confirmation not found - onboardingId: ${onboardingId}, mobile: ${mobile}`,
+          { onboardingId, mobile },
+          'Onboarding with email confirmation not found',
         );
-        throw new Error(
-          `Onboarding with email confirmation not found - onboardingId: ${onboardingId}, mobile: ${mobile}`,
-        );
+        throw new Error('Onboarding with email confirmation not found');
       } else {
-        this.logger.log(
-          `Onboarding with email confirmed - onboardingId: ${onboardingId}, mobile: ${mobile}`,
+        this.logger.info(
+          { onboardingId, mobile },
+          'Onboarding with email confirmed',
         );
         return [onboardingConf, MobileStatus.AVAILABLE];
       }
     } else {
-      this.logger.log(
-        `Onboarding found with mobile - onboardingId ${onboardingId}, mobile: ${mobile}`,
+      this.logger.info(
+        { onboardingId, mobile },
+        'Onboarding found with mobile',
       );
       if (OnboardingStatus.EMAIL_CONFIRMED === onboardingFound.getStatus()) {
-        this.logger.log(
-          `Onboarding with email confirmed - onboardingId: ${onboardingId}, mobile: ${mobile}`,
+        this.logger.info(
+          { onboardingId, mobile },
+          'Onboarding with email confirmed',
         );
         return [onboardingFound, MobileStatus.AVAILABLE];
       } else {
-        this.logger.error(`Mobile is already taken - mobile: ${mobile}`);
-        throw new Error(`Mobile is already taken - mobile: ${mobile}`);
+        this.logger.error({ onboardingId, mobile }, 'Mobile is already taken');
+        throw new Error('Mobile is already taken');
       }
     }
   }

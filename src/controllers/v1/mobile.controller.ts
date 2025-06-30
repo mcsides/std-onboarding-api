@@ -9,15 +9,16 @@ import { ValidateMobileDto } from './dto/validate-mobile.dto';
 import { ValidateMobileUsecase } from '../../usecase/validate-mobile.usecase';
 import { MobileValidationDto } from './dto/mobile-validation.dto';
 import { ApiCreatedResponse } from '@nestjs/swagger';
-import { Logger } from '@nestjs/common';
+import { InjectPinoLogger } from 'nestjs-pino';
+import { PinoLogger } from 'nestjs-pino';
 
 @Controller('/v1/mobile')
 export class MobileController {
-  private readonly logger: Logger;
-
-  constructor(private readonly validateMobileUsecase: ValidateMobileUsecase) {
-    this.logger = new Logger(MobileController.name);
-  }
+  constructor(
+    @InjectPinoLogger(MobileController.name)
+    private readonly logger: PinoLogger,
+    private readonly validateMobileUsecase: ValidateMobileUsecase,
+  ) {}
 
   @Post('/validate')
   @ApiCreatedResponse({
@@ -29,7 +30,10 @@ export class MobileController {
     @Body() validateMobileDto: ValidateMobileDto,
   ): Promise<MobileValidationDto> {
     if (!onboardingId) {
-      this.logger.error('Missing required header: X-Onboarding-Id');
+      this.logger.error(
+        { onboardingId },
+        'Missing required header: X-Onboarding-Id',
+      );
       throw new BadRequestException('Missing required header: X-Onboarding-Id');
     }
     const result = await this.validateMobileUsecase.exe(

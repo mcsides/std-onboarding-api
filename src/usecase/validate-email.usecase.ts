@@ -19,7 +19,7 @@ export class ValidateEmailUsecase {
   ): Promise<[Onboarding, EmailStatus]> {
     this.logger.info({ onboardingId, email }, 'Start email validation');
     return this.onboardingRepository
-      .findBy({ email: email })
+      .findByIdAndEmail(onboardingId, email)
       .then((onboardingFound) => {
         if (!onboardingFound) {
           this.logger.info(

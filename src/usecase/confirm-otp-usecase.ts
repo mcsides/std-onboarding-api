@@ -1,53 +1,55 @@
-import { Logger } from '@nestjs/common';
 import { OnboardingRepository } from '../domain/repository/onboarding.repository';
 import { OnboardingStatus } from 'src/domain/entity/onboarding-status.enum';
 import { Injectable } from '@nestjs/common';
 import { authenticator } from 'otplib';
+import { InjectPinoLogger } from 'nestjs-pino';
+import { PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class ConfirmOtpUsecase {
-  private readonly logger: Logger;
-
-  constructor(private readonly onboardingRepository: OnboardingRepository) {
-    this.logger = new Logger(ConfirmOtpUsecase.name);
-  }
+  constructor(
+    @InjectPinoLogger(ConfirmOtpUsecase.name)
+    private readonly logger: PinoLogger,
+    private readonly onboardingRepository: OnboardingRepository,
+  ) {}
 
   async exe(
     email: string,
     otp: string,
     onboardingId: string,
   ): Promise<boolean> {
-    this.logger.log(
-      `Confirm OTP - email: ${email}, onboardingId: ${onboardingId}, otp: ${otp}`,
+    this.logger.info(
+      { onboardingId, email },
+      'Start to confirm the OTP for email',
     );
-    const onboardingFound = await this.onboardingRepository.findBy({
-      email: email,
-      onboardingId: onboardingId,
-      status: OnboardingStatus.INITIATED,
-    });
+    const onboardingFound =
+      await this.onboardingRepository.findByIdAndEmailAndStatus(
+        onboardingId,
+        email,
+        OnboardingStatus.INITIATED,
+      );
     if (!onboardingFound) {
       this.logger.error(
-        `Onboarding not found for email: ${email} and onboardingId: ${onboardingId}`,
+        { onboardingId, email },
+        'Cannot confirm OTP, the email was not found',
       );
-      throw new Error(
-        `Onboarding not found for email: ${email} and onboardingId: ${onboardingId}`,
-      );
+      throw new Error('Cannot confirm OTP, the email was not found');
     } else {
-      this.logger.log(
-        `Onboarding found for email: ${email} - onboardingId: ${onboardingId}`,
-      );
+      this.logger.info({ onboardingId, email }, 'Onboarding found for email');
       let isValidOtp = false;
       if (otp === '000000') {
         this.logger.warn(
-          `Using OTP fallback for email: ${email} - onboardingId: ${onboardingId}`,
+          { onboardingId, email },
+          'Using OTP fallback for email.',
         );
         isValidOtp = true; // Fallback for testing purposes
         const onboardingUpd = await this.onboardingRepository.patch(
           onboardingId,
           OnboardingStatus.EMAIL_CONFIRMED,
         );
-        this.logger.log(
-          `Email sucessfully confirmed - otp: ${otp}, email: ${onboardingUpd.getEmail()}`,
+        this.logger.info(
+          { onboardingId: onboardingUpd.getOnboardingId(), email },
+          'Email sucessfully confirmed',
         );
       } else {
         isValidOtp = authenticator.check(otp, onboardingId);
@@ -55,8 +57,9 @@ export class ConfirmOtpUsecase {
           onboardingId,
           OnboardingStatus.EMAIL_CONFIRMED,
         );
-        this.logger.log(
-          `Email sucessfully confirmed - otp: ${otp}, email: ${onboardingUpd.getEmail()}`,
+        this.logger.info(
+          { onboardingId: onboardingUpd.getOnboardingId(), email },
+          'Email sucessfully confirmed.',
         );
       }
       return isValidOtp;
