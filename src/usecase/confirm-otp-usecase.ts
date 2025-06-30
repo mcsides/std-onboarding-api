@@ -23,49 +23,43 @@ export class ConfirmOtpUsecase {
     const onboardingFound = await this.onboardingRepository.findBy({
       email: email,
       onboardingId: onboardingId,
+      status: OnboardingStatus.INITIATED,
     });
     if (!onboardingFound) {
       this.logger.error(
-        `No onboarding found for email: ${email} - onboardingId: ${onboardingId}`,
+        `Onboarding not found for email: ${email} and onboardingId: ${onboardingId}`,
       );
-      throw new Error('Onboarding not found');
+      throw new Error(
+        `Onboarding not found for email: ${email} and onboardingId: ${onboardingId}`,
+      );
     } else {
       this.logger.log(
         `Onboarding found for email: ${email} - onboardingId: ${onboardingId}`,
       );
-      if (onboardingFound.getStatus() !== OnboardingStatus.INITIATED) {
-        this.logger.error(
-          `Onboarding not available for email: ${email} - onboardingId: ${onboardingId}, status: ${onboardingFound.getStatus()}`,
+      let isValidOtp = false;
+      if (otp === '000000') {
+        this.logger.warn(
+          `Using OTP fallback for email: ${email} - onboardingId: ${onboardingId}`,
         );
-        throw new Error(
-          `Onboarding not available for email: ${email} - onboardingId: ${onboardingId}, status: ${onboardingFound.getStatus()}`,
+        isValidOtp = true; // Fallback for testing purposes
+        const onboardingUpd = await this.onboardingRepository.patch(
+          onboardingId,
+          OnboardingStatus.EMAIL_CONFIRMED,
+        );
+        this.logger.log(
+          `Email sucessfully confirmed - otp: ${otp}, email: ${onboardingUpd.getEmail()}`,
         );
       } else {
-        let isValidOtp = false;
-        if (otp === '000000') {
-          this.logger.warn(
-            `Using OTP fallback for email: ${email} - onboardingId: ${onboardingId}`,
-          );
-          isValidOtp = true; // Fallback for testing purposes
-          const onboardingUpd = await this.onboardingRepository.patch(
-            onboardingId,
-            OnboardingStatus.EMAIL_CONFIRMED,
-          );
-          this.logger.log(
-            `Email sucessfully confirmed - otp: ${otp}, email: ${onboardingUpd.getEmail()}`,
-          );
-        } else {
-          isValidOtp = authenticator.check(otp, onboardingId);
-          const onboardingUpd = await this.onboardingRepository.patch(
-            onboardingId,
-            OnboardingStatus.EMAIL_CONFIRMED,
-          );
-          this.logger.log(
-            `Email sucessfully confirmed - otp: ${otp}, email: ${onboardingUpd.getEmail()}`,
-          );
-        }
-        return isValidOtp;
+        isValidOtp = authenticator.check(otp, onboardingId);
+        const onboardingUpd = await this.onboardingRepository.patch(
+          onboardingId,
+          OnboardingStatus.EMAIL_CONFIRMED,
+        );
+        this.logger.log(
+          `Email sucessfully confirmed - otp: ${otp}, email: ${onboardingUpd.getEmail()}`,
+        );
       }
+      return isValidOtp;
     }
   }
 }

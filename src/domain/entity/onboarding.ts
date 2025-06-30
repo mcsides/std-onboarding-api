@@ -5,7 +5,7 @@ export class Onboarding {
     private readonly onboardingId: string,
     private readonly status: OnboardingStatus,
     private readonly email: string,
-    private readonly mobile?: number,
+    private readonly mobile?: string,
   ) {}
 
   getOnboardingId(): string {
@@ -20,7 +20,7 @@ export class Onboarding {
     return this.email;
   }
 
-  getMobile(): number | undefined {
+  getMobile(): string | undefined {
     return this.mobile;
   }
 
@@ -33,8 +33,7 @@ class OnboardingBuilder {
   private onboardingId!: string;
   private status: OnboardingStatus;
   private email: string;
-  private mobile?: number;
-  private otpSeed?: string;
+  private mobile?: string;
 
   setOnboardingId(onboardingId: string): this {
     this.onboardingId = onboardingId;
@@ -51,7 +50,7 @@ class OnboardingBuilder {
     return this;
   }
 
-  setMobile(mobile: number): this {
+  setMobile(mobile: string): this {
     this.mobile = mobile;
     return this;
   }

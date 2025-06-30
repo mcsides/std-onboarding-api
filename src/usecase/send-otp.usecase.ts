@@ -16,6 +16,7 @@ export class SendOtpUsecase {
     const onboardingFound = await this.onboardingRepository.findBy({
       onboardingId: onboardingId,
       email: email,
+      status: OnboardingStatus.INITIATED,
     });
     if (!onboardingFound) {
       this.logger.error(
@@ -28,25 +29,16 @@ export class SendOtpUsecase {
       this.logger.log(
         `Onboarding found for email: ${email} and onboardingId: ${onboardingId}`,
       );
-      if (onboardingFound.getStatus() !== OnboardingStatus.INITIATED) {
-        this.logger.error(
-          `Onboarding not available. email: ${email}, onboardingId: ${onboardingId}, status: ${onboardingFound.getStatus()}`,
-        );
-        throw new Error(
-          `Onboarding not available. email: ${email} onboardingId: ${onboardingId}, status: ${onboardingFound.getStatus()}`,
-        );
-      } else {
-        this.logger.log(`Generating OTP for email: ${email}`);
-        const otp = authenticator.generate(onboardingFound.getOnboardingId());
-        this.logger.log(`OTP generated for email: ${email} is ${otp}`);
-        // TODO Here you would typically send the OTP via email or SMS
-        // For example, using a mail service or SMS gateway
-        // await this.mailService.sendOtp(email, otp);
-        // or
-        // await this.smsService.sendOtp(mobile, otp);
-        this.logger.log(`OTP sent to email: ${email}`);
-        return otp; // Return the OTP for further processing if needed
-      }
+      this.logger.log(`Generating OTP for email: ${email}`);
+      const otp = authenticator.generate(onboardingFound.getOnboardingId());
+      this.logger.log(`OTP generated for email: ${email} is ${otp}`);
+      // TODO Here you would typically send the OTP via email or SMS
+      // For example, using a mail service or SMS gateway
+      // await this.mailService.sendOtp(email, otp);
+      // or
+      // await this.smsService.sendOtp(mobile, otp);
+      this.logger.log(`OTP sent to email: ${email}`);
+      return otp; // Return the OTP for further processing if needed
     }
   }
 }
