@@ -16,7 +16,7 @@ export class OnboardingRepository {
     this.logger = new Logger(OnboardingRepository.name);
   }
 
-  async findBy(payload: Record<string, any>): Promise<Onboarding | void> {
+  async findBy(payload: Record<string, any>): Promise<Onboarding | undefined> {
     return this.onboardingModel
       .findOne(payload)
       .exec()

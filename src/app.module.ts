@@ -13,6 +13,8 @@ import { OnboardingRepository } from './domain/repository/onboarding.repository'
 import { SendOtpUsecase } from './usecase/send-otp.usecase';
 import { ConfirmOtpUsecase } from './usecase/confirm-otp-usecase';
 import { ValidateMobileUsecase } from './usecase/validate-mobile.usecase';
+import { LoggerModule } from 'nestjs-pino';
+import { IncomingMessage } from 'http';
 
 @Module({
   imports: [
@@ -23,6 +25,29 @@ import { ValidateMobileUsecase } from './usecase/validate-mobile.usecase';
     MongooseModule.forFeature([
       { name: OnboardingDocument.name, schema: OnboardingSchema },
     ]),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        serializers: { req: () => undefined },
+        customProps: (req: IncomingMessage) => ({
+          http: {
+            method: req.method,
+            url: req.url,
+            id: req.id,
+          },
+        }),
+        level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
+        transport: process.env.NODE_ENV !== 'production'
+        ? { 
+            target: 'pino-pretty', 
+            options: {
+              colorize: true,
+              translateTime: 'SYS:standard',
+              singleLine: true,
+            }, 
+          }
+        : undefined,
+      }
+    })
   ],
   controllers: [EmailController, OtpController, MobileController],
   providers: [
