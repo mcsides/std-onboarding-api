@@ -30,7 +30,7 @@ jobs:
   build:
     name: Build
     needs: check-source-branch
-    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@v1.8.1
+    uses: Stamper-Labs/core-flows/.github/workflows/yarn-nestjs-build.yml@v1.8.2
     with:
       node_version: "22"
       release_mode: "no"
