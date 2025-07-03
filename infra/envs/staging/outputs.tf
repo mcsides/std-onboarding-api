@@ -1,5 +1,5 @@
-output "std_onboarding_api_ecs_task_definition_arn" {
-  value = module.std_onboarding_api_ecs_task_definition.arn
+output "cnd_onboarding_api_ecs_task_definition_arn" {
+  value = module.cnd_onboarding_api_ecs_task_definition.arn
 }
 
 output "stamper_vpc_subnet_a_public_id" {
