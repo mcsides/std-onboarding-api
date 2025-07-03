@@ -1,7 +1,7 @@
 [
   {
     "name": "onboarding-api",
-    "image": "050752613795.dkr.ecr.us-east-1.amazonaws.com/stamper/std-onboarding-api:${image_tag}",
+    "image": "050752613795.dkr.ecr.us-east-1.amazonaws.com/stamper/cnd-onboarding-api:${image_tag}",
     "essential": true,
     "portMappings": [
       {
@@ -9,5 +9,7 @@
         "protocol": "tcp"
       }
     ]
-  }
+  },
+  "cpu": 128,
+  "memory": 256
 ]
