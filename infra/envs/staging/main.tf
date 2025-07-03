@@ -11,7 +11,7 @@ module "cnd_onboarding_api_ecs_task_definition" {
   source                   = "../../module/ecs_task_definition"
   td_family                = "cnd_onboarding_api_ecs_task_definition"
   td_network_mode          = "awsvpc"
-  td_compatibilities       = ["FARGATE_SPOT"]
+  td_compatibilities       = ["FARGATE"]
   td_cpu                   = "256"
   td_memory                = "512"
   td_container_definitions = templatefile( 
