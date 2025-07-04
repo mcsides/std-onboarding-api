@@ -6,6 +6,10 @@ output "stamper_vpc_subnet_a_public_id" {
   value = data.terraform_remote_state.base_infra.outputs.stamper_vpc_subnet_a_public_id
 }
 
+output "stamper_vpc_subnet_b_private_id" {
+  value = data.terraform_remote_state.base_infra.outputs.stamper_vpc_subnet_b_private_id
+}
+
 output "stamper_vpc_security_group_id" {
   value = data.terraform_remote_state.base_infra.outputs.stamper_vpc_security_group_id
 }
