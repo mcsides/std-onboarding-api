@@ -14,7 +14,8 @@ import { SendOtpUsecase } from './usecase/send-otp.usecase';
 import { ConfirmOtpUsecase } from './usecase/confirm-otp-usecase';
 import { ValidateMobileUsecase } from './usecase/validate-mobile.usecase';
 import { LoggerModule } from 'nestjs-pino';
-import getPinoConfig from './pino.config';
+import getPinoConfig from './config/pino/pino.config';
+import { DynamoModule } from './config/dynamo/dynamo.module';
 
 @Module({
   imports: [
@@ -30,6 +31,12 @@ import getPinoConfig from './pino.config';
     ]),
     LoggerModule.forRootAsync({
       useFactory: async () => getPinoConfig(),
+    }),
+    DynamoModule.forRoot({
+      region: process.env.DYNAMODB_REGION ?? '',
+      endpoint: process.env.DYNAMODB_ENDPOINT ?? '',
+      accessKeyId: process.env.DYNAMODB_ACCESS_KEY_ID ?? '',
+      secretAccessKey: process.env.DYNAMODB_SECRET_ACCESS_KEY ?? '',
     }),
   ],
   controllers: [EmailController, OtpController, MobileController],
