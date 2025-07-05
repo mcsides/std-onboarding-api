@@ -25,5 +25,4 @@ RUN yarn build
 EXPOSE 3000
 
 # Command to run the application
-ENV NODE_ENV=production
 CMD ["yarn", "start:prod"]

@@ -14,40 +14,22 @@ import { SendOtpUsecase } from './usecase/send-otp.usecase';
 import { ConfirmOtpUsecase } from './usecase/confirm-otp-usecase';
 import { ValidateMobileUsecase } from './usecase/validate-mobile.usecase';
 import { LoggerModule } from 'nestjs-pino';
-import { IncomingMessage } from 'http';
+import getPinoConfig from './pino.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV || 'local'}`,
+    }),
     MongooseModule.forRoot(
       'mongodb://admin:admin@localhost:27017/onboarding-api-db?authSource=admin',
     ),
     MongooseModule.forFeature([
       { name: OnboardingDocument.name, schema: OnboardingSchema },
     ]),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        serializers: { req: () => undefined },
-        customProps: (req: IncomingMessage) => ({
-          http: {
-            method: req.method,
-            url: req.url,
-            id: req.id,
-          },
-        }),
-        level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
-        transport:
-          process.env.NODE_ENV !== 'production'
-            ? {
-                target: 'pino-pretty',
-                options: {
-                  colorize: true,
-                  translateTime: 'SYS:standard',
-                  singleLine: true,
-                },
-              }
-            : undefined,
-      },
+    LoggerModule.forRootAsync({
+      useFactory: async () => getPinoConfig(),
     }),
   ],
   controllers: [EmailController, OtpController, MobileController],
